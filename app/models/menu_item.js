@@ -4,6 +4,10 @@ class MenuItemModels {
     listall(knex) {
         return knex('menu_item');
     }
+    listone(knex, menu_id) {
+        return knex('menu_item')
+            .where('menu_id', menu_id);
+    }
     add(knex, data) {
         return knex('menu_item')
             .insert(data);

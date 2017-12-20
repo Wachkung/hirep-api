@@ -6,6 +6,12 @@ export class MenuItemModels {
     return knex('menu_item')
   }
 
+  listone(knex: Knex, menu_id: any) {
+    return knex('menu_item')
+      .where('menu_id', menu_id);
+  }
+
+
   add(knex: Knex, data: any) {
     return knex('menu_item')
       .insert(data);

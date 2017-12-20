@@ -17,6 +17,20 @@ router.get('/', (req, res, next) => {
         db.destroy();
     });
 });
+router.get('/:menu_id', (req, res, next) => {
+    let db = req.db;
+    let menu_id = req.params.menu_id;
+    menuItemModels.listone(db, menu_id)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db.destroy();
+    });
+});
 router.post('/', (req, res, next) => {
     let db = req.db;
     let menu_id = req.body.menu_id;
