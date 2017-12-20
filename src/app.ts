@@ -16,6 +16,7 @@ import * as cors from 'cors';
 import users from './routes/users';
 import menus from './routes/menu';
 import menuitems from './routes/menu_item';
+import subitems from './routes/sub_item';
 
 const app: express.Express = express();
 
@@ -71,6 +72,7 @@ app.use('/',index);
 app.use('/users', users);
 app.use('/menu', menus);
 app.use('/items', menuitems);
+app.use('/subitems', subitems);
 
 //catch 404 and forward to error handler
 app.use((req,res,next) => {

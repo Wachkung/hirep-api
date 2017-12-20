@@ -3,15 +3,15 @@
 import * as express from 'express';
 const router = express.Router();
 
-import { MenuItemModels } from '../models/menu_item';
-const menuItemModels = new MenuItemModels();
+import { SubMenuItemModels } from '../models/sub_item';
+const subMenuItemModels = new SubMenuItemModels();
 
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
   let db = req.db;
 
-  menuItemModels.listall(db)
+  subMenuItemModels.listall(db)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
@@ -23,11 +23,11 @@ router.get('/', (req, res, next) => {
     })
 });
 
-router.get('/:menu_id', (req, res, next) => {
+router.get('/:item_id', (req, res, next) => {
   let db = req.db;
-  let menu_id = req.params.menu_id;
+  let item_id = req.params.item_id;
 
-  menuItemModels.listone(db, menu_id)
+  subMenuItemModels.listone(db, item_id)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
@@ -42,20 +42,23 @@ router.get('/:menu_id', (req, res, next) => {
 router.post('/', (req, res, next) => {
   let db = req.db;
 
-  let menu_id = req.body.menu_id;
-  let item_name = req.body.item_name;
+  let sub_item_id = req.body.sub_id;
+  let item_id = req.body.item_id;
+  let sub_item_name = req.body.sub_name;
+  let query_id = req.body.query_id;
   let comment = req.body.comment;
-  let item_status = req.body.item_status;
+  let sub_item_status = req.body.sub_status;
   let datas: any = {
-    menu_id: menu_id,
-    item_name: item_name,
-    item_status: item_status,
+    item_id: item_id,
+    sub_item_name: sub_item_name,
+    query_id: query_id,
+    sub_item_status: sub_item_status,
     comment: comment
   }
 
   console.log(datas);
 
-  menuItemModels.add(db, datas)
+  subMenuItemModels.add(db, datas)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
@@ -70,21 +73,23 @@ router.post('/', (req, res, next) => {
 router.put('/', (req, res, next) => {
   let db = req.db;
 
+  let sub_item_id = req.body.sub_id;
   let item_id = req.body.item_id;
-  let menu_id = req.body.menu_id;
-  let item_name = req.body.item_name;
+  let sub_item_name = req.body.sub_name;
+  let query_id = req.body.query_id;
   let comment = req.body.comment;
-  let item_status = req.body.item_status;
+  let sub_item_status = req.body.sub_status;
   let datas: any = {
-    menu_id: menu_id,
-    item_name: item_name,
-    item_status: item_status,
+    item_id: item_id,
+    sub_item_name: sub_item_name,
+    query_id: query_id,
+    sub_item_status: sub_item_status,
     comment: comment
   }
 
   console.log(datas);
 
-  menuItemModels.update(db, item_id, datas)
+  subMenuItemModels.update(db, sub_item_id, datas)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
@@ -98,9 +103,9 @@ router.put('/', (req, res, next) => {
 router.delete('/', (req, res, next) => {
   let db = req.db;
 
-  let item_id = req.body.item_id;
+  let sub_item_id = req.body.sub_item_id;
 
-  menuItemModels.del(db, item_id)
+  subMenuItemModels.del(db, sub_item_id)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
