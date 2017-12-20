@@ -23,7 +23,7 @@ router.get('/', (req, res, next) => {
     })
 });
 
-router.get('/:menu_id', (req, res, next) => {
+router.get('/:menu_id ', (req, res, next) => {
   let db = req.db;
   let menu_id = req.params.menu_id;
 
@@ -47,7 +47,7 @@ router.post('/', (req, res, next) => {
   let comment = req.body.comment;
   let item_status = req.body.item_status;
   let datas: any = {
-    menu_id:menu_id,
+    menu_id: menu_id,
     item_name: item_name,
     item_status: item_status,
     comment: comment
@@ -76,7 +76,7 @@ router.put('/', (req, res, next) => {
   let comment = req.body.comment;
   let item_status = req.body.item_status;
   let datas: any = {
-    menu_id:menu_id,
+    menu_id: menu_id,
     item_name: item_name,
     item_status: item_status,
     comment: comment
