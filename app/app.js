@@ -15,6 +15,7 @@ const menu_item_1 = require("./routes/menu_item");
 const sub_item_1 = require("./routes/sub_item");
 const query_1 = require("./routes/query");
 const report_1 = require("./routes/report");
+const hosp_info_1 = require("./routes/hosp_info");
 const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -57,6 +58,7 @@ app.use('/items', menu_item_1.default);
 app.use('/subitems', sub_item_1.default);
 app.use('/query', query_1.default);
 app.use('/report', report_1.default);
+app.use('/setup', hosp_info_1.default);
 app.use((req, res, next) => {
     var err = new Error('Not Found');
     err['status'] = 404;
