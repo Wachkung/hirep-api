@@ -22,9 +22,11 @@ router.post('/', (req, res, next) => {
     let id = req.body.id;
     let header = req.body.header;
     let data = req.body.data;
+    let comment = req.body.comment;
     let datas = {
         header: header,
-        data: data
+        data: data,
+        comment: comment
     };
     console.log(datas);
     hospModels.add(db, datas)
@@ -43,9 +45,11 @@ router.put('/', (req, res, next) => {
     let id = req.body.id;
     let header = req.body.header;
     let data = req.body.data;
+    let comment = req.body.comment;
     let datas = {
         header: header,
-        data: data
+        data: data,
+        comment: comment
     };
     console.log(datas);
     hospModels.update(db, id, datas)
