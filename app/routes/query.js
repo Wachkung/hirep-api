@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const router = express.Router();
-const menu_1 = require("../models/menu");
-const menuModels = new menu_1.MenuModels();
+const query_1 = require("../models/query");
+const queryModels = new query_1.QueryModels();
 router.get('/', (req, res, next) => {
     let db = req.db;
-    menuModels.listall(db)
+    queryModels.listall(db)
         .then((results) => {
         res.send({ ok: true, rows: results });
     })
@@ -19,19 +19,19 @@ router.get('/', (req, res, next) => {
 });
 router.post('/', (req, res, next) => {
     let db = req.db;
-    let menu_id = req.body.menu_id;
-    let menu_name = req.body.menu_name;
-    let description = req.body.description;
-    let status = req.body.status;
-    let rout = req.body.rout;
+    let query_id = req.body.menu_id;
+    let query_name = req.body.menu_name;
+    let query_sql = req.body.query_sql;
+    let paramtype = req.body.paramtype;
+    let comment = req.body.comment;
     let datas = {
-        menu_name: menu_name,
-        description: description,
-        status: status,
-        rout: rout
+        query_name: query_name,
+        query_sql: query_sql,
+        paramtype: paramtype,
+        comment: comment
     };
     console.log(datas);
-    menuModels.add(db, datas)
+    queryModels.add(db, datas)
         .then((results) => {
         res.send({ ok: true, rows: results });
     })
@@ -44,19 +44,19 @@ router.post('/', (req, res, next) => {
 });
 router.put('/', (req, res, next) => {
     let db = req.db;
-    let menu_id = req.body.menu_id;
-    let menu_name = req.body.menu_name;
-    let description = req.body.description;
-    let status = req.body.status;
-    let rout = req.body.rout;
+    let query_id = req.body.menu_id;
+    let query_name = req.body.menu_name;
+    let query_sql = req.body.query_sql;
+    let paramtype = req.body.paramtype;
+    let comment = req.body.comment;
     let datas = {
-        menu_name: menu_name,
-        description: description,
-        status: status,
-        rout: rout
+        query_name: query_name,
+        query_sql: query_sql,
+        paramtype: paramtype,
+        comment: comment
     };
     console.log(datas);
-    menuModels.update(db, menu_id, datas)
+    queryModels.update(db, query_id, datas)
         .then((results) => {
         res.send({ ok: true, rows: results });
     })
@@ -69,8 +69,8 @@ router.put('/', (req, res, next) => {
 });
 router.delete('/', (req, res, next) => {
     let db = req.db;
-    let menu_id = req.body.menu_id;
-    menuModels.del(db, menu_id)
+    let query_id = req.body.query_id;
+    queryModels.del(db, query_id)
         .then((results) => {
         res.send({ ok: true, rows: results });
     })
@@ -82,4 +82,4 @@ router.delete('/', (req, res, next) => {
     });
 });
 exports.default = router;
-//# sourceMappingURL=menu.js.map
+//# sourceMappingURL=query.js.map
