@@ -17,6 +17,8 @@ import users from './routes/users';
 import menus from './routes/menu';
 import menuitems from './routes/menu_item';
 import subitems from './routes/sub_item';
+import querys from './routes/query';
+import reports from './routes/report';
 
 const app: express.Express = express();
 
@@ -73,6 +75,8 @@ app.use('/users', users);
 app.use('/menu', menus);
 app.use('/items', menuitems);
 app.use('/subitems', subitems);
+app.use('/query', querys);
+app.use('/report', reports);
 
 //catch 404 and forward to error handler
 app.use((req, res, next) => {
