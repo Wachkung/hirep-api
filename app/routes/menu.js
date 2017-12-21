@@ -23,10 +23,12 @@ router.post('/', (req, res, next) => {
     let menu_name = req.body.menu_name;
     let description = req.body.description;
     let status = req.body.status;
+    let rout = req.body.rout;
     let datas = {
         menu_name: menu_name,
         description: description,
-        status: status
+        status: status,
+        rout: rout
     };
     console.log(datas);
     menuModels.add(db, datas)
@@ -46,10 +48,12 @@ router.put('/', (req, res, next) => {
     let menu_name = req.body.menu_name;
     let description = req.body.description;
     let status = req.body.status;
+    let rout = req.body.rout;
     let datas = {
         menu_name: menu_name,
         description: description,
-        status: status
+        status: status,
+        rout: rout
     };
     console.log(datas);
     menuModels.update(db, menu_id, datas)
