@@ -24,16 +24,16 @@ import hospinfo from './routes/hosp_info';
 const app: express.Express = express();
 
 //view engine setup
-app.set('views',path.join(__dirname,'views'));
-app.set('view engine','pug');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 //uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 //ประกาศใช้ cors
@@ -70,7 +70,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/',index);
+
+app.use('/', index);
 app.use('/users', users);
 app.use('/menu', menus);
 app.use('/items', menuitems);
@@ -80,7 +81,7 @@ app.use('/report', reports);
 app.use('/setup', hospinfo);
 
 //catch 404 and forward to error handler
-app.use((req,res,next) => {
+app.use((req, res, next) => {
   var err = new Error('Not Found');
   err['status'] = 404;
   next(err);
@@ -90,22 +91,22 @@ app.use((req,res,next) => {
 
 //development error handler
 //will print stacktrace
-if(process.env.NODE_ENV === 'development') {
-  app.use((err: Error,req,res,next) => {
+if (process.env.NODE_ENV === 'development') {
+  app.use((err: Error, req, res, next) => {
     res.status(err['status'] || 500);
-    res.render('error',{
+    res.render('error', {
       title: 'error',
       message: err.message,
       error: err
     });
-  });    
+  });
 }
 
 //production error handler
 // no stacktrace leaked to user
-app.use((err: Error,req,res,next) => {
+app.use((err: Error, req, res, next) => {
   res.status(err['status'] || 500);
-  res.render('error',{
+  res.render('error', {
     title: 'error',
     message: err.message,
     error: {}
