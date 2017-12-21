@@ -22,6 +22,22 @@ router.get('/', (req, res, next) => {
             db.destroy();
         })
 });
+router.post('/login', (req, res, next) => {
+    let db = req.db;
+    let username = req.body.username;
+    let password = req.body.password;
+
+    userModels.login(db, username, password)
+        .then((results: any) => {
+            res.send({ ok: true, rows: results });
+        })
+        .catch(error => {
+            res.send({ ok: false, error: error })
+        })
+        .finally(() => {
+            db.destroy();
+        })
+});
 
 router.post('/', (req, res, next) => {
     let db = req.db;
@@ -69,7 +85,7 @@ router.put('/', (req, res, next) => {
         is_accept: is_accept
     }
 
-  console.log(datas);
+    console.log(datas);
 
     userModels.update(db, id_user, datas)
         .then((results: any) => {

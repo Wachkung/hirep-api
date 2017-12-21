@@ -4,6 +4,11 @@ class UsersModels {
     listall(knex) {
         return knex('users');
     }
+    login(knex, username, password) {
+        return knex('users')
+            .where('username', username)
+            .where('password', password);
+    }
     add(knex, data) {
         return knex('users')
             .insert(data);
