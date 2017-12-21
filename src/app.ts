@@ -19,6 +19,7 @@ import menuitems from './routes/menu_item';
 import subitems from './routes/sub_item';
 import querys from './routes/query';
 import reports from './routes/report';
+import hospinfo from './routes/hosp_info';
 
 const app: express.Express = express();
 
@@ -77,6 +78,7 @@ app.use('/items', menuitems);
 app.use('/subitems', subitems);
 app.use('/query', querys);
 app.use('/report', reports);
+app.use('/setup', hospinfo);
 
 //catch 404 and forward to error handler
 app.use((req, res, next) => {
