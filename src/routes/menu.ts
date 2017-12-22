@@ -3,15 +3,15 @@
 import * as express from 'express';
 const router = express.Router();
 
-import { QueryModels } from '../models/query';
-const queryModels = new QueryModels();
+import { MenuModels } from '../models/menu';
+const menuModels = new MenuModels();
 
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
   let db = req.db;
 
-  queryModels.listall(db)
+  menuModels.listall(db)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
@@ -26,21 +26,21 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   let db = req.db;
 
-  let query_id = req.body.menu_id;
-  let query_name = req.body.menu_name;
-  let query_sql = req.body.query_sql;
-  let paramtype = req.body.paramtype;
-  let comment = req.body.comment;
+  let menu_id = req.body.menu_id;
+  let menu_name = req.body.menu_name;
+  let description = req.body.description;
+  let status = req.body.status;
+  let rout = req.body.rout;
   let datas: any = {
-    query_name: query_name,
-    query_sql: query_sql,
-    paramtype: paramtype,
-    comment: comment
+    menu_name: menu_name,
+    description: description,
+    status: status,
+    rout: rout
   }
 
   console.log(datas);
 
-  queryModels.add(db, datas)
+  menuModels.add(db, datas)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
@@ -55,21 +55,21 @@ router.post('/', (req, res, next) => {
 router.put('/', (req, res, next) => {
   let db = req.db;
 
-  let query_id = req.body.menu_id;
-  let query_name = req.body.menu_name;
-  let query_sql = req.body.query_sql;
-  let paramtype = req.body.paramtype;
-  let comment = req.body.comment;
+  let menu_id = req.body.menu_id;
+  let menu_name = req.body.menu_name;
+  let description = req.body.description;
+  let status = req.body.status;
+  let rout = req.body.rout;
   let datas: any = {
-    query_name: query_name,
-    query_sql: query_sql,
-    paramtype: paramtype,
-    comment: comment
+    menu_name: menu_name,
+    description: description,
+    status: status,
+    rout: rout
   }
 
   console.log(datas);
 
-  queryModels.update(db, query_id, datas)
+  menuModels.update(db, menu_id, datas)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
@@ -83,9 +83,9 @@ router.put('/', (req, res, next) => {
 router.delete('/', (req, res, next) => {
   let db = req.db;
 
-  let query_id = req.body.query_id;
+  let menu_id = req.body.menu_id;
 
-  queryModels.del(db, query_id)
+  menuModels.del(db, menu_id)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
