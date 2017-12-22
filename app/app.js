@@ -46,7 +46,7 @@ app.use((req, res, next) => {
             }
         },
         debug: true,
-        acquireConnectionTimeout: 5000
+        acquireConnectionTimeout: 15000
     });
     next();
 });
