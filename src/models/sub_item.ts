@@ -6,9 +6,9 @@ export class SubMenuItemModels {
     return knex('sub_menu_item')
   }
 
-  listone(knex: Knex, item_id: any) {
+  listone(knex: Knex, sub_item_id: any) {
     return knex('sub_menu_item')
-    .where('item_id', item_id);
+    .where('sub_item_id', sub_item_id);
   }
 
 

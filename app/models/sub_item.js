@@ -4,9 +4,9 @@ class SubMenuItemModels {
     listall(knex) {
         return knex('sub_menu_item');
     }
-    listone(knex, item_id) {
+    listone(knex, sub_item_id) {
         return knex('sub_menu_item')
-            .where('item_id', item_id);
+            .where('sub_item_id', sub_item_id);
     }
     add(knex, data) {
         return knex('sub_menu_item')
