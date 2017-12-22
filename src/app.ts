@@ -17,7 +17,6 @@ import users from './routes/users';
 import menus from './routes/menu';
 import menuitems from './routes/menu_item';
 import subitems from './routes/sub_item';
-import querys from './routes/query';
 import reports from './routes/report';
 import hospinfo from './routes/hosp_info';
 
@@ -64,7 +63,7 @@ app.use((req, res, next) => {
       }
     },
     debug: true,
-    acquireConnectionTimeout: 5000
+    acquireConnectionTimeout: 15000
   });
 
   next();
@@ -76,7 +75,6 @@ app.use('/users', users);
 app.use('/menu', menus);
 app.use('/items', menuitems);
 app.use('/subitems', subitems);
-app.use('/query', querys);
 app.use('/report', reports);
 app.use('/setup', hospinfo);
 

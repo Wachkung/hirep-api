@@ -23,11 +23,11 @@ router.get('/', (req, res, next) => {
     })
 });
 
-router.get('/:item_id', (req, res, next) => {
+router.get('/:sub_id', (req, res, next) => {
   let db = req.db;
-  let item_id = req.params.item_id;
+  let sub_id = req.params.sub_id;
 
-  subMenuItemModels.listone(db, item_id)
+  subMenuItemModels.listone(db, sub_id)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
@@ -45,13 +45,17 @@ router.post('/', (req, res, next) => {
   let sub_item_id = req.body.sub_id;
   let item_id = req.body.item_id;
   let sub_item_name = req.body.sub_name;
-  let query_id = req.body.query_id;
+  let query_sql = req.body.query_id;
+  let query_params = req.body.query_params;
+  let template = req.body.template;
   let comment = req.body.comment;
   let sub_item_status = req.body.sub_status;
   let datas: any = {
     item_id: item_id,
     sub_item_name: sub_item_name,
-    query_id: query_id,
+    query_sql: query_sql,
+    query_params: query_params,
+    template: template,
     sub_item_status: sub_item_status,
     comment: comment
   }
@@ -76,13 +80,17 @@ router.put('/', (req, res, next) => {
   let sub_item_id = req.body.sub_id;
   let item_id = req.body.item_id;
   let sub_item_name = req.body.sub_name;
-  let query_id = req.body.query_id;
+  let query_sql = req.body.query_id;
+  let query_params = req.body.query_params;
+  let template = req.body.template;
   let comment = req.body.comment;
   let sub_item_status = req.body.sub_status;
   let datas: any = {
     item_id: item_id,
     sub_item_name: sub_item_name,
-    query_id: query_id,
+    query_sql: query_sql,
+    query_params: query_params,
+    template: template,
     sub_item_status: sub_item_status,
     comment: comment
   }
