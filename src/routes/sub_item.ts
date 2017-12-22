@@ -23,11 +23,11 @@ router.get('/', (req, res, next) => {
     })
 });
 
-router.get('/:item_id', (req, res, next) => {
+router.get('/:sub_id', (req, res, next) => {
   let db = req.db;
-  let item_id = req.params.item_id;
+  let sub_id = req.params.sub_id;
 
-  subMenuItemModels.listone(db, item_id)
+  subMenuItemModels.listone(db, sub_id)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
     })
