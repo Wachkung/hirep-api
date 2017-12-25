@@ -41,6 +41,7 @@ router.post('/', (req, res, next) => {
     let template = req.body.template;
     let comment = req.body.comment;
     let sub_item_status = req.body.sub_status;
+    let user_level = req.body.level;
     let datas = {
         item_id: item_id,
         sub_item_name: sub_item_name,
@@ -48,7 +49,8 @@ router.post('/', (req, res, next) => {
         query_params: query_params,
         template: template,
         sub_item_status: sub_item_status,
-        comment: comment
+        comment: comment,
+        user_level: user_level
     };
     console.log(datas);
     subMenuItemModels.add(db, datas)
@@ -72,6 +74,7 @@ router.put('/', (req, res, next) => {
     let template = req.body.template;
     let comment = req.body.comment;
     let sub_item_status = req.body.sub_status;
+    let user_level = req.body.level;
     let datas = {
         item_id: item_id,
         sub_item_name: sub_item_name,
@@ -79,7 +82,8 @@ router.put('/', (req, res, next) => {
         query_params: query_params,
         template: template,
         sub_item_status: sub_item_status,
-        comment: comment
+        comment: comment,
+        user_level: user_level
     };
     console.log(datas);
     subMenuItemModels.update(db, sub_item_id, datas)
