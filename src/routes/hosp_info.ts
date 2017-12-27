@@ -76,7 +76,7 @@ router.put('/', (req, res, next) => {
       db.destroy();
     })
 })
-router.delete('/', (req, res, next) => {
+router.post('/del', (req, res, next) => {
   let db = req.db;
 
   let id = req.body.id;
