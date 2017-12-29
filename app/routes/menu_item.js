@@ -80,9 +80,10 @@ router.put('/', (req, res, next) => {
         db.destroy();
     });
 });
-router.delete('/', (req, res, next) => {
+router.post('/del', (req, res, next) => {
     let db = req.db;
     let item_id = req.body.item_id;
+    console.log(item_id);
     menuItemModels.del(db, item_id)
         .then((results) => {
         res.send({ ok: true, rows: results });

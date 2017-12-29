@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const router = express.Router();
-const _hosp_info_1 = require("../models/\u0E49hosp_info");
-const hospModels = new _hosp_info_1.HospInfoModels();
+const hosp_info_1 = require("../models/hosp_info");
+const hospModels = new hosp_info_1.HospInfoModels();
 router.get('/', (req, res, next) => {
     let db = req.db;
     hospModels.listall(db)
@@ -63,9 +63,10 @@ router.put('/', (req, res, next) => {
         db.destroy();
     });
 });
-router.delete('/', (req, res, next) => {
+router.post('/del', (req, res, next) => {
     let db = req.db;
     let id = req.body.id;
+    console.log(id);
     hospModels.del(db, id)
         .then((results) => {
         res.send({ ok: true, rows: results });
