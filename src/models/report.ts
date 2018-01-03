@@ -6,4 +6,9 @@ export class ReportModels {
     let sql = query;
     return knex.raw(sql,params)
   }
+  
+  viewReportNoParam(knex: Knex,query: any) {
+    let sql = query;
+    return knex.raw(sql)
+  }
 }
