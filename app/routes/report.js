@@ -9,7 +9,6 @@ router.get('/', (req, res, next) => {
 });
 router.post('/', (req, res, next) => {
     let db = req.db;
-    let report_id = req.body.sub_item_id;
     let sql = req.body.query_sql;
     let paramtype = req.body.query_params;
     if (paramtype) {
