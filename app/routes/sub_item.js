@@ -33,11 +33,12 @@ router.get('/:sub_id', (req, res, next) => {
 });
 router.post('/', (req, res, next) => {
     let db = req.db;
-    let sub_item_id = req.body.sub_id;
+    let sub_item_id = req.body.sub_item_id;
     let item_id = req.body.item_id;
-    let sub_item_name = req.body.sub_name;
-    let query_sql = req.body.query_id;
+    let sub_item_name = req.body.sub_item_name;
+    let query_sql = req.body.query_sql;
     let query_params = req.body.query_params;
+    let column_selected = req.body.column_selected;
     let template = req.body.template;
     let comment = req.body.comment;
     let sub_item_status = req.body.sub_status;
@@ -46,9 +47,10 @@ router.post('/', (req, res, next) => {
         sub_item_name: sub_item_name,
         query_sql: query_sql,
         query_params: query_params,
+        column_selected: column_selected,
         template: template,
         sub_item_status: sub_item_status,
-        comment: comment
+        comment: comment,
     };
     console.log(datas);
     subMenuItemModels.add(db, datas)
@@ -64,11 +66,12 @@ router.post('/', (req, res, next) => {
 });
 router.put('/', (req, res, next) => {
     let db = req.db;
-    let sub_item_id = req.body.sub_id;
+    let sub_item_id = req.body.sub_item_id;
     let item_id = req.body.item_id;
-    let sub_item_name = req.body.sub_name;
-    let query_sql = req.body.query_id;
+    let sub_item_name = req.body.sub_item_name;
+    let query_sql = req.body.query_sql;
     let query_params = req.body.query_params;
+    let column_selected = req.body.column_selected;
     let template = req.body.template;
     let comment = req.body.comment;
     let sub_item_status = req.body.sub_status;
@@ -77,9 +80,10 @@ router.put('/', (req, res, next) => {
         sub_item_name: sub_item_name,
         query_sql: query_sql,
         query_params: query_params,
+        column_selected: column_selected,
         template: template,
         sub_item_status: sub_item_status,
-        comment: comment
+        comment: comment,
     };
     console.log(datas);
     subMenuItemModels.update(db, sub_item_id, datas)

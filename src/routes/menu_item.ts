@@ -95,13 +95,22 @@ router.put('/', (req, res, next) => {
       db.destroy();
     })
 })
+<<<<<<< HEAD
 //router.delete('/:varitem_id', (req, res, next) => {
   router.post('/del', (req, res, next) => {
 
+=======
+router.post('/del', (req, res, next) => {
+>>>>>>> 2bac8abe99b9925dc57b1073314f376aa6171391
   let db = req.db;
-
   let item_id = req.body.item_id;
+<<<<<<< HEAD
   console.log(item_id);
+=======
+
+  console.log(item_id);
+
+>>>>>>> 2bac8abe99b9925dc57b1073314f376aa6171391
   menuItemModels.del(db, item_id)
     .then((results: any) => {
       res.send({ ok: true, rows: results });
