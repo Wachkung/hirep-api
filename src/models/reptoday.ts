@@ -4,7 +4,10 @@ import Knex = require('knex');
 export class ReptodayModels {
 
     today(knex: Knex) {
-        let sql = `SELECT 'total is today' as  namecln,count(ovst.vn) as cns2 FROM cln INNER JOIN ovst ON cln.cln = ovst.cln WHERE DATE_FORMAT(ovst.vstdttm,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d')`;
+        let sql = `SELECT 
+        'total is today' as  namecln,count(ovst.vn) as cns2 
+        FROM cln INNER JOIN ovst ON cln.cln = ovst.cln 
+        WHERE DATE_FORMAT(ovst.vstdttm,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d')`;
         return knex.raw(sql);
     }
     todayipt(knex: Knex) {

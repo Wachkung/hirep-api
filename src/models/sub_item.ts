@@ -11,7 +11,6 @@ export class SubMenuItemModels {
     .where('sub_item_id', sub_item_id);
   }
 
-
   add(knex: Knex, data: any) {
     return knex('rep_sub_menu_item')
     .insert(data);

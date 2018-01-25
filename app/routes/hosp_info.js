@@ -66,6 +66,7 @@ router.put('/', (req, res, next) => {
 router.post('/del', (req, res, next) => {
     let db = req.db;
     let id = req.body.id;
+    console.log(id);
     hospModels.del(db, id)
         .then((results) => {
         res.send({ ok: true, rows: results });

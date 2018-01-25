@@ -47,6 +47,7 @@ router.post('/', (req, res, next) => {
   let sub_item_name = req.body.sub_item_name;
   let query_sql = req.body.query_sql;
   let query_params = req.body.query_params;
+  let column_selected = req.body.column_selected;
   let template = req.body.template;
   let comment = req.body.comment;
   let sub_item_status = req.body.sub_status;
@@ -55,6 +56,7 @@ router.post('/', (req, res, next) => {
     sub_item_name: sub_item_name,
     query_sql: query_sql,
     query_params: query_params,
+    column_selected: column_selected,
     template: template,
     sub_item_status: sub_item_status,
     comment: comment,
@@ -82,6 +84,7 @@ router.put('/', (req, res, next) => {
   let sub_item_name = req.body.sub_item_name;
   let query_sql = req.body.query_sql;
   let query_params = req.body.query_params;
+  let column_selected = req.body.column_selected;
   let template = req.body.template;
   let comment = req.body.comment;
   let sub_item_status = req.body.sub_status;
@@ -90,6 +93,7 @@ router.put('/', (req, res, next) => {
     sub_item_name: sub_item_name,
     query_sql: query_sql,
     query_params: query_params,
+    column_selected: column_selected,
     template: template,
     sub_item_status: sub_item_status,
     comment: comment,
