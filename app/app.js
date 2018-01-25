@@ -32,10 +32,33 @@ let connection = {
     password: process.env.DB_PASSWORD,
     multipleStatements: true
 };
+let connection2 = {
+    host: process.env.DB2_HOST,
+    port: +process.env.DB2_PORT,
+    database: process.env.DB2_NAME,
+    user: process.env.DB2_USER,
+    password: process.env.DB2_PASSWORD,
+    multipleStatements: true
+};
 app.use((req, res, next) => {
     req.db = Knex({
         client: 'mysql',
         connection: connection,
+        pool: {
+            min: 0,
+            max: 7,
+            afterCreate: (conn, done) => {
+                conn.query('SET NAMES utf8', (err) => {
+                    done(err, conn);
+                });
+            }
+        },
+        debug: true,
+        acquireConnectionTimeout: 15000
+    });
+    req.db2 = Knex({
+        client: 'mysql',
+        connection: connection2,
         pool: {
             min: 0,
             max: 7,
