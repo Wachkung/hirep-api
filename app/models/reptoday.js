@@ -321,7 +321,7 @@ class ReptodayModels {
                         ovst.cln, 
                         cln.namecln
                         FROM cln INNER JOIN ovst ON cln.cln = ovst.cln
-                        WHERE DATE(ovst.vstdttm) BETWEEN ? and  ? 
+                        WHERE DATE(ovst.vstdttm) BETWEEN '2017-10-01' and '2018-09-30'
                         GROUP by ovst.vn) as a GROUP BY a.cln 
 						ORDER BY cns2 desc)d, (SELECT @rownum:=0) r
                         LIMIT 0, 1000000 ;  
