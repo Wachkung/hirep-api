@@ -19,6 +19,7 @@ import menuitems from './routes/menu_item';
 import subitems from './routes/sub_item';
 import reports from './routes/report';
 import hospinfo from './routes/hosp_info';
+import reptoday from './routes/reptoday';
 
 const app: express.Express = express();
 
@@ -48,6 +49,15 @@ let connection: MySqlConnectionConfig = {
   multipleStatements: true
 }
 
+let connection2: MySqlConnectionConfig = {
+  host: process.env.DB2_HOST,
+  port: +process.env.DB2_PORT,
+  database: process.env.DB2_NAME,
+  user: process.env.DB2_USER,
+  password: process.env.DB2_PASSWORD,
+  multipleStatements: true
+}
+
 //ประกาศเสร็จแล้ว มาเรียกใช้ connection
 app.use((req, res, next) => {
   req.db = Knex({
@@ -66,9 +76,24 @@ app.use((req, res, next) => {
     acquireConnectionTimeout: 15000
   });
 
+  req.db2 = Knex({
+    client: 'mysql',
+    connection: connection2,
+    pool: {
+      min: 0,
+      max: 7,
+      afterCreate: (conn, done) => {
+        conn.query('SET NAMES utf8', (err) => {
+          done(err, conn);
+        });
+      }
+    },
+    debug: true,
+    acquireConnectionTimeout: 15000
+  });
+
   next();
 });
-
 
 app.use('/', index);
 app.use('/users', users);
@@ -77,6 +102,7 @@ app.use('/items', menuitems);
 app.use('/subitems', subitems);
 app.use('/report', reports);
 app.use('/setup', hospinfo);
+app.use('/', reptoday);
 
 //catch 404 and forward to error handler
 app.use((req, res, next) => {

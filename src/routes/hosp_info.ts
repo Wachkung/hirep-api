@@ -3,7 +3,7 @@
 import * as express from 'express';
 const router = express.Router();
 
-import { HospInfoModels } from '../models/้hosp_info';
+import { HospInfoModels } from '../models/hosp_info';
 const hospModels = new HospInfoModels();
 
 

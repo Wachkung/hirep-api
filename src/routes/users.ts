@@ -22,6 +22,7 @@ router.get('/', (req, res, next) => {
             db.destroy();
         })
 });
+
 router.post('/login', (req, res, next) => {
     let db = req.db;
     let username = req.body.username;

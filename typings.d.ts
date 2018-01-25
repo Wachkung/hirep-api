@@ -84,6 +84,7 @@ declare global {
             file: Multer.File;
             files: Multer.File[];
             db: Knex;
+            db2: Knex;
             decoded: any // jwt decoded
         }
 
