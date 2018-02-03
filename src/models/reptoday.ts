@@ -311,7 +311,8 @@ export class ReptodayModels {
                             GROUP BY yearbudget
                             DESC LIMIT 5;  
                         `;
-    }
+                        return knex.raw(sql);
+                    }
     //รับตัวแปร ที่ส่งมาจาก router
     typetotal(knex: Knex, startdate: any, enddate: any) {
         // console.log(startdate);
@@ -332,7 +333,9 @@ export class ReptodayModels {
 						ORDER BY cns2 desc)d, (SELECT @rownum:=0) r
                         LIMIT 0, 1000000 ;  
                         `;
-        return knex.raw(sql, startdate, enddate);
+       // return knex.raw(sql, startdate, enddate);
+
+       return knex.raw(sql);
     }
 
 }

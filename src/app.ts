@@ -19,11 +19,8 @@ import menuitems from './routes/menu_item';
 import subitems from './routes/sub_item';
 import reports from './routes/report';
 import hospinfo from './routes/hosp_info';
-<<<<<<< HEAD
 //import  opvisit from './routes/opvisit';
-=======
 import reptoday from './routes/reptoday';
->>>>>>> 8b1c041f5ee07312143b7bec9645b35df28fe5cb
 
 const app: express.Express = express();
 
@@ -106,11 +103,8 @@ app.use('/items', menuitems);
 app.use('/subitems', subitems);
 app.use('/report', reports);
 app.use('/setup', hospinfo);
-<<<<<<< HEAD
 //app.use('/view',opvisit);
-=======
 app.use('/', reptoday);
->>>>>>> 8b1c041f5ee07312143b7bec9645b35df28fe5cb
 
 //catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -308,6 +308,7 @@ class ReptodayModels {
                             GROUP BY yearbudget
                             DESC LIMIT 5;  
                         `;
+        return knex.raw(sql);
     }
     typetotal(knex, startdate, enddate) {
         let sql = `
@@ -326,7 +327,7 @@ class ReptodayModels {
 						ORDER BY cns2 desc)d, (SELECT @rownum:=0) r
                         LIMIT 0, 1000000 ;  
                         `;
-        return knex.raw(sql, startdate, enddate);
+        return knex.raw(sql);
     }
 }
 exports.ReptodayModels = ReptodayModels;

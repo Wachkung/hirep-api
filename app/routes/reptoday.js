@@ -160,6 +160,19 @@ router.get('/overvisit', (req, res, next) => {
         db2.destroy();
     });
 });
+router.get('/overadmin', (req, res, next) => {
+    let db2 = req.db2;
+    reptoday.overadmin(db2)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db2.destroy();
+    });
+});
 router.get('/typetotal/:startdate/:enddate', (req, res, next) => {
     let db2 = req.db2;
     let startdate = req.params.startdate;
