@@ -308,6 +308,7 @@ class ReptodayModels {
                             GROUP BY yearbudget
                             DESC LIMIT 5;  
                         `;
+        return knex.raw(sql);
     }
     typetotal(knex, startdate, enddate) {
         let sql = `

@@ -31,6 +31,20 @@ router.get('/:sub_id', (req, res, next) => {
         db.destroy();
     });
 });
+router.get('/item/:item_id', (req, res, next) => {
+    let db = req.db;
+    let item_id = req.params.item_id;
+    subMenuItemModels.listtwo(db, item_id)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db.destroy();
+    });
+});
 router.post('/', (req, res, next) => {
     let db = req.db;
     let sub_item_id = req.body.sub_item_id;

@@ -15,7 +15,7 @@ router.post('/', (req, res, next) => {
         let params = paramtype.split(",");
         reportModels.viewReport(db, sql, params)
             .then((results) => {
-            res.send({ ok: true, rows: results[0] });
+            res.send({ ok: true, rows: results });
         })
             .catch(error => {
             res.send({ ok: false, error: error });
@@ -27,7 +27,7 @@ router.post('/', (req, res, next) => {
     else {
         reportModels.viewReportNoParam(db, sql)
             .then((results) => {
-            res.send({ ok: true, rows: results[0] });
+            res.send({ ok: true, rows: results });
         })
             .catch(error => {
             console.log("cannot result query");

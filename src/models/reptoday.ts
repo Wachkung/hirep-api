@@ -311,6 +311,7 @@ export class ReptodayModels {
                             GROUP BY yearbudget
                             DESC LIMIT 5;  
                         `;
+        return knex.raw(sql);
     }
     //รับตัวแปร ที่ส่งมาจาก router
     typetotal(knex: Knex, startdate: any, enddate: any) {
