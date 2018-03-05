@@ -9,10 +9,13 @@ export class SubMenuItemModels {
   listone(knex: Knex, sub_item_id: any) {
     return knex('rep_sub_menu_item')
       .where('sub_item_id', sub_item_id);
+
   }
   listtwo(knex: Knex, item_id: any) {
+    console.log("item_ids : ");
+    console.log(item_id);
     return knex('rep_sub_menu_item')
-      .where('item_id', item_id);
+      .whereIn('item_id', item_id);
   }
 
   add(knex: Knex, data: any) {

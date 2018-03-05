@@ -33,7 +33,8 @@ router.get('/:sub_id', (req, res, next) => {
 });
 router.get('/item/:item_id', (req, res, next) => {
     let db = req.db;
-    let item_id = req.params.item_id;
+    let item_ids = req.params.item_id;
+    let item_id = item_ids.split(",");
     subMenuItemModels.listtwo(db, item_id)
         .then((results) => {
         res.send({ ok: true, rows: results });

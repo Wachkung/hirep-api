@@ -9,8 +9,10 @@ class SubMenuItemModels {
             .where('sub_item_id', sub_item_id);
     }
     listtwo(knex, item_id) {
+        console.log("item_ids : ");
+        console.log(item_id);
         return knex('rep_sub_menu_item')
-            .where('item_id', item_id);
+            .whereIn('item_id', item_id);
     }
     add(knex, data) {
         return knex('rep_sub_menu_item')
