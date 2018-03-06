@@ -11,9 +11,11 @@ router.post('/', (req, res, next) => {
     let db = req.db;
     let sql = req.body.query_sql;
     let paramtype = req.body.query_params;
+    console.log(sql);
     console.log(paramtype);
     if (paramtype) {
-        let params = paramtype;
+        let params = paramtype.split(",");
+        console.log(params);
         reportModels.viewReport(db, sql, params)
             .then((results) => {
             res.send({ ok: true, rows: results });
