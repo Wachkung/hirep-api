@@ -12,8 +12,6 @@ export class SubMenuItemModels {
 
   }
   listtwo(knex: Knex, item_id: any) {
-    console.log("item_ids : ");
-    console.log(item_id);
     return knex('rep_sub_menu_item')
       .whereIn('item_id', item_id);
   }
