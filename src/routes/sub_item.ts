@@ -67,7 +67,7 @@ router.post('/', (req, res, next) => {
   let column_selected = req.body.column_selected;
   let template = req.body.template;
   let comment = req.body.comment;
-  let sub_item_status = req.body.sub_status;
+  let sub_item_status = req.body.sub_item_status;
   let datas: any = {
     item_id: item_id,
     sub_item_name: sub_item_name,
@@ -104,7 +104,7 @@ router.put('/', (req, res, next) => {
   let column_selected = req.body.column_selected;
   let template = req.body.template;
   let comment = req.body.comment;
-  let sub_item_status = req.body.sub_status;
+  let sub_item_status = req.body.sub_item_status;
   let datas: any = {
     item_id: item_id,
     sub_item_name: sub_item_name,
