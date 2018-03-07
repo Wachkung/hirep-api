@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    let db = req.db;
+    let db = req.db2;
 
     let sql = req.body.query_sql;
     let paramtype = req.body.query_params;
