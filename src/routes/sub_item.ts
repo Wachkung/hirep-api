@@ -39,6 +39,22 @@ router.get('/:sub_id', (req, res, next) => {
     })
 });
 
+router.get('/item/:item_id', (req, res, next) => {
+  let db = req.db;
+  let item_id = req.params.item_id;
+
+  subMenuItemModels.listtwo(db, item_id)
+    .then((results: any) => {
+      res.send({ ok: true, rows: results });
+    })
+    .catch(error => {
+      res.send({ ok: false, error: error })
+    })
+    .finally(() => {
+      db.destroy();
+    })
+});
+
 router.post('/', (req, res, next) => {
   let db = req.db;
 

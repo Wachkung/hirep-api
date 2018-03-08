@@ -96,7 +96,7 @@ router.put('/', (req, res, next) => {
     })
 })
 //router.delete('/:varitem_id', (req, res, next) => {
-  router.post('/del', (req, res, next) => {
+router.post('/del', (req, res, next) => {
 
   let db = req.db;
   let item_id = req.body.item_id;
