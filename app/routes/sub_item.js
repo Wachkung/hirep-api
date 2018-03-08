@@ -33,7 +33,8 @@ router.get('/:sub_id', (req, res, next) => {
 });
 router.get('/item/:item_id', (req, res, next) => {
     let db = req.db;
-    let item_id = req.params.item_id;
+    let item_ids = req.params.item_id;
+    let item_id = item_ids.split(",");
     subMenuItemModels.listtwo(db, item_id)
         .then((results) => {
         res.send({ ok: true, rows: results });
@@ -55,7 +56,7 @@ router.post('/', (req, res, next) => {
     let column_selected = req.body.column_selected;
     let template = req.body.template;
     let comment = req.body.comment;
-    let sub_item_status = req.body.sub_status;
+    let sub_item_status = req.body.sub_item_status;
     let datas = {
         item_id: item_id,
         sub_item_name: sub_item_name,
@@ -88,7 +89,7 @@ router.put('/', (req, res, next) => {
     let column_selected = req.body.column_selected;
     let template = req.body.template;
     let comment = req.body.comment;
-    let sub_item_status = req.body.sub_status;
+    let sub_item_status = req.body.sub_item_status;
     let datas = {
         item_id: item_id,
         sub_item_name: sub_item_name,

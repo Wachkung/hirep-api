@@ -12,13 +12,17 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    let db = req.db;
+    let db = req.db2;
 
     let sql = req.body.query_sql;
     let paramtype = req.body.query_params;
+    // console.log(sql);
+    // console.log(paramtype);
 
     if (paramtype) {
-        let params: any[] = paramtype.split(",");
+        //let params: any[] = paramtype.split(",");
+        let params: any[] = paramtype;
+        //console.log(params);
         reportModels.viewReport(db, sql, params)
             .then((results: any) => {
                 res.send({ ok: true, rows: results });

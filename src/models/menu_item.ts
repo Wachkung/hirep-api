@@ -4,13 +4,13 @@ import Knex = require('knex');
 export class MenuItemModels {
   listall(knex: Knex) {
     return knex('rep_menu_item')
+
   }
 
   listone(knex: Knex, menu_id: any) {
     return knex('rep_menu_item')
       .where('menu_id', menu_id);
   }
-
 
   add(knex: Knex, data: any) {
     return knex('rep_menu_item')
