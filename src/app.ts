@@ -20,6 +20,7 @@ import subitems from './routes/sub_item';
 import reports from './routes/report';
 import hospinfo from './routes/hosp_info';
 import reptoday from './routes/reptoday';
+import ampur from './routes/ampur';
 
 const app: express.Express = express();
 
@@ -103,6 +104,7 @@ app.use('/subitems', subitems);
 app.use('/report', reports);
 app.use('/setup', hospinfo);
 app.use('/', reptoday);
+app.use('/ampur', ampur);
 
 //catch 404 and forward to error handler
 app.use((req, res, next) => {
