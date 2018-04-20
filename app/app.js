@@ -16,6 +16,9 @@ const sub_item_1 = require("./routes/sub_item");
 const report_1 = require("./routes/report");
 const hosp_info_1 = require("./routes/hosp_info");
 const reptoday_1 = require("./routes/reptoday");
+const ampur_1 = require("./routes/ampur");
+const cln_1 = require("./routes/cln");
+const mooban_1 = require("./routes/mooban");
 const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -55,7 +58,7 @@ app.use((req, res, next) => {
             }
         },
         debug: true,
-        acquireConnectionTimeout: 15000
+        acquireConnectionTimeout: 1500000
     });
     req.db2 = Knex({
         client: 'mysql',
@@ -70,7 +73,7 @@ app.use((req, res, next) => {
             }
         },
         debug: true,
-        acquireConnectionTimeout: 15000
+        acquireConnectionTimeout: 1500000
     });
     next();
 });
@@ -82,6 +85,9 @@ app.use('/subitems', sub_item_1.default);
 app.use('/report', report_1.default);
 app.use('/setup', hosp_info_1.default);
 app.use('/', reptoday_1.default);
+app.use('/ampur', ampur_1.default);
+app.use('/cln', cln_1.default);
+app.use('/mooban', mooban_1.default);
 app.use((req, res, next) => {
     var err = new Error('Not Found');
     err['status'] = 404;

@@ -21,7 +21,9 @@ import reports from './routes/report';
 import hospinfo from './routes/hosp_info';
 //import  opvisit from './routes/opvisit';
 import reptoday from './routes/reptoday';
-
+import ampur   from './routes/ampur';
+import  cln    from './routes/cln';
+import  mooban   from './routes/mooban';
 const app: express.Express = express();
 
 //view engine setup
@@ -74,7 +76,7 @@ app.use((req, res, next) => {
       }
     },
     debug: true,
-    acquireConnectionTimeout: 15000
+    acquireConnectionTimeout: 1500000
   });
 
   req.db2 = Knex({
@@ -90,7 +92,7 @@ app.use((req, res, next) => {
       }
     },
     debug: true,
-    acquireConnectionTimeout: 15000
+    acquireConnectionTimeout: 1500000
   });
 
   next();
@@ -105,7 +107,9 @@ app.use('/report', reports);
 app.use('/setup', hospinfo);
 //app.use('/view',opvisit);
 app.use('/', reptoday);
-
+app.use('/ampur',ampur);
+app.use('/cln',cln);
+app.use('/mooban',mooban);
 //catch 404 and forward to error handler
 app.use((req, res, next) => {
   var err = new Error('Not Found');
