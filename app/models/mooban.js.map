@@ -1,1 +1,1 @@
-{"version":3,"file":"mooban.js","sourceRoot":"","sources":["../../src/models/mooban.ts"],"names":[],"mappings":"AAAA,YAAY,CAAC;;AAGb;IACI,OAAO,CAAC,IAAU;QACd,MAAM,CAAC,IAAI,CAAC,QAAQ,CAAC;aACpB,KAAK,CAAC,SAAS,EAAE,EAAE,CAAC,CAAA;IACvB,CAAC;CACN;AALD,oCAKC"}
+{"version":3,"file":"mooban.js","sourceRoot":"","sources":["../../src/models/mooban.ts"],"names":[],"mappings":"AAAA,YAAY,CAAC;;AAGb;IACI,OAAO,CAAC,IAAU,EAAC,KAAS;QACxB,MAAM,CAAC,IAAI,CAAC,QAAQ,CAAC;aACpB,KAAK,CAAC,SAAS,EAAE,EAAE,CAAC;aACpB,QAAQ,CAAC,QAAQ,EAAC,KAAK,CAAC,CAAA;IAC3B,CAAC;CACN;AAND,oCAMC"}

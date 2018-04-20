@@ -6,10 +6,10 @@ const router = express.Router();
 import { MoobanModels } from '../models/mooban';
 const moobanModels = new MoobanModels();
 
-router.get('/', (req, res, next) => {
+router.get('/:ampur', (req, res, next) => {
     let db = req.db2;
-  
-    moobanModels.listall(db)
+    let ampur = req.params.ampur;
+    moobanModels.listall(db,ampur)
       .then((results: any) => {
         res.send({ ok: true, rows: results });
       })
