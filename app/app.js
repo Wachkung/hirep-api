@@ -19,6 +19,7 @@ const reptoday_1 = require("./routes/reptoday");
 const ampur_1 = require("./routes/ampur");
 const cln_1 = require("./routes/cln");
 const mooban_1 = require("./routes/mooban");
+const idpm_1 = require("./routes/idpm");
 const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -88,6 +89,7 @@ app.use('/', reptoday_1.default);
 app.use('/ampur', ampur_1.default);
 app.use('/cln', cln_1.default);
 app.use('/mooban', mooban_1.default);
+app.use('/idpm', idpm_1.default);
 app.use((req, res, next) => {
     var err = new Error('Not Found');
     err['status'] = 404;

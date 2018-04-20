@@ -24,6 +24,9 @@ import reptoday from './routes/reptoday';
 import ampur   from './routes/ampur';
 import  cln    from './routes/cln';
 import  mooban   from './routes/mooban';
+import  idpm   from './routes/idpm';
+
+
 const app: express.Express = express();
 
 //view engine setup
@@ -110,6 +113,7 @@ app.use('/', reptoday);
 app.use('/ampur',ampur);
 app.use('/cln',cln);
 app.use('/mooban',mooban);
+app.use('/idpm',idpm);
 //catch 404 and forward to error handler
 app.use((req, res, next) => {
   var err = new Error('Not Found');

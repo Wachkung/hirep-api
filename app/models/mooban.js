@@ -4,7 +4,8 @@ class MoobanModels {
     listall(knex, ampur) {
         return knex('mooban')
             .where('chwpart', 34)
-            .andWhere('ampart', ampur);
+            .andWhere('amppart', ampur)
+            .groupBy('hospsub');
     }
 }
 exports.MoobanModels = MoobanModels;
