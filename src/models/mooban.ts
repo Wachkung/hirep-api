@@ -2,8 +2,11 @@
 import Knex = require('knex');
 
 export class MoobanModels {
-    listall(knex: Knex) {
+    listall(knex: Knex, ampur: any) {
         return knex('mooban')
-        .where('chwpart', 34)
-      }
+            .where('chwpart', 34)
+            .andWhere('amppart', ampur)
+            .groupBy('hospsub')
+
+    }
 }
