@@ -203,5 +203,109 @@ router.post('/typetotal', (req, res, next) => {
         db2.destroy();
     });
 });
+router.get('/bed', (req, res, next) => {
+    let db2 = req.db2;
+    reptoday.bed(db2)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db2.destroy();
+    });
+});
+router.get('/todayreferout', (req, res, next) => {
+    let db2 = req.db2;
+    reptoday.todayreferout(db2)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db2.destroy();
+    });
+});
+router.get('/todayreferback', (req, res, next) => {
+    let db2 = req.db2;
+    reptoday.todayreferback(db2)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db2.destroy();
+    });
+});
+router.get('/todayrefersocial', (req, res, next) => {
+    let db2 = req.db2;
+    reptoday.todayrefersocial(db2)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db2.destroy();
+    });
+});
+router.get('/todayopddead', (req, res, next) => {
+    let db2 = req.db2;
+    reptoday.todayopddead(db2)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db2.destroy();
+    });
+});
+router.get('/todayipddead', (req, res, next) => {
+    let db2 = req.db2;
+    reptoday.todayipddead(db2)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db2.destroy();
+    });
+});
+router.get('/todaylrbrith', (req, res, next) => {
+    let db2 = req.db2;
+    reptoday.todaylrbrith(db2)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db2.destroy();
+    });
+});
+router.get('/todaylrwait', (req, res, next) => {
+    let db2 = req.db2;
+    reptoday.todaylrwait(db2)
+        .then((results) => {
+        res.send({ ok: true, rows: results });
+    })
+        .catch(error => {
+        res.send({ ok: false, error: error });
+    })
+        .finally(() => {
+        db2.destroy();
+    });
+});
 exports.default = router;
 //# sourceMappingURL=reptoday.js.map

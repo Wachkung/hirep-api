@@ -3,9 +3,32 @@ import Knex = require('knex');
 
 export class ReptodayModels {
 
+    bed(knex: Knex) {
+        let sql = `select 
+        date_format(now(),'%Y-%m-%d') as regdate
+        ,date_format(now(),'%H:%i:%s') as regtime
+         
+        ,i.ward as ward_code
+        ,d.nameidpm as ward_name
+        ,d.bed as ward_bed
+        ,COUNT(DISTINCT an) as ward_pt
+         
+         
+        from 
+        hi.ipt as i 
+        left join hi.idpm as d on i.ward=d.idpm
+        join hi.setup as s 
+        where i.dchtype = 0 and year(i.rgtdate) between year(SUBDATE(now(),INTERVAL 1 year)) and year(now())   and ward <> ''
+        group by i.ward`;
+        return knex.raw(sql);
+    }
+
+
+
+
     today(knex: Knex) {
         let sql = `SELECT 
-        'total is today' as  namecln,count(ovst.vn) as cns2 
+        'total is today' as  today,count(ovst.vn) as amount 
         FROM cln INNER JOIN ovst ON cln.cln = ovst.cln 
         WHERE DATE_FORMAT(ovst.vstdttm,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d')`;
         return knex.raw(sql);
@@ -24,25 +47,25 @@ export class ReptodayModels {
     }
     todaytype(knex: Knex) {
         let sql = `
-                            SELECT @rownum:= @rownum+1 as Num, d.* FROM
-                            (SELECT pttype.stdcode as icd10,
-                            pttype.namepttype as icd10name,
-                            a.pttype,
-                            pttype.inscl,
-                            sum(a.cns) as can 
-                            from(SELECT ovst.vn, 
-                            ovst.vstdttm, 
-                            ovst.hn, 
-                            count(ovst.vn) AS cns, 
-                            ovst.cln, 
-                            cln.namecln, 
-                            ovst.pttype
-                            FROM cln INNER JOIN ovst ON cln.cln = ovst.cln
-                            WHERE DATE_FORMAT(ovst.vstdttm,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d')
-                            GROUP BY ovst.vn) as a 
-                            INNER JOIN pttype on pttype.pttype = a.pttype   
-                            GROUP BY   a.pttype   ORDER BY  can desc)d, (SELECT @rownum:=0) r
-                            LIMIT 0, 1000000 ; 
+        SELECT @rownum:= @rownum+1 as Num, d.* FROM
+        (SELECT  
+        pttype.namepttype,
+        a.pttype,
+        pttype.inscl,
+        sum(a.cns) as amount
+        from(SELECT ovst.vn, 
+        ovst.vstdttm, 
+        ovst.hn, 
+        count(ovst.vn) AS cns, 
+        ovst.cln, 
+        cln.namecln, 
+        ovst.pttype
+        FROM cln INNER JOIN ovst ON cln.cln = ovst.cln
+        WHERE DATE_FORMAT(ovst.vstdttm,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d')
+        GROUP BY ovst.vn) as a 
+        INNER JOIN pttype on pttype.pttype = a.pttype   
+        GROUP BY   a.pttype   ORDER BY  amount desc)d, (SELECT @rownum:=0) r GROUP BY inscl
+        LIMIT 0, 1000000 ; 
                         `;
         return knex.raw(sql);
 
@@ -50,7 +73,7 @@ export class ReptodayModels {
     todaytotal(knex: Knex) {
         let sql = `
                         SELECT @rownum:= @rownum+1 as Num, d.* FROM
-						(SELECT  a.namecln,a.cln,sum(a.cns) as cns2
+						(SELECT  a.namecln ,a.cln,sum(a.cns) as amount
                         from(
                         SELECT ovst.vn, 
                         ovst.vstdttm, 
@@ -61,7 +84,7 @@ export class ReptodayModels {
                         FROM cln INNER JOIN ovst ON cln.cln = ovst.cln
                         WHERE DATE_FORMAT(ovst.vstdttm,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') 
                         GROUP by ovst.vn) as a GROUP BY a.cln 
-						ORDER BY cns2 desc)d, (SELECT @rownum:=0) r
+						ORDER BY amount desc)d, (SELECT @rownum:=0) r
                         LIMIT 0, 1000000 ;  
                         `;
         return knex.raw(sql);
@@ -111,7 +134,7 @@ export class ReptodayModels {
                             GROUP BY icd101.icd10 
                             ORDER BY total DESC
                             LIMIT 0, 10000000) d, (SELECT @rownum:=0) r
-                            LIMIT 0, 1000000 ; 
+                            LIMIT 20 ; 
                         `;
         return knex.raw(sql);
     }
@@ -133,7 +156,7 @@ export class ReptodayModels {
                             GROUP BY icd101.icd10 
                             ORDER BY total DESC
                             LIMIT 0, 10000000) d, (SELECT @rownum:=0) r
-                            LIMIT 0, 1000000 ; 
+                            LIMIT 0, 20 ; 
                         `;
         return knex.raw(sql);
     }
@@ -211,7 +234,7 @@ export class ReptodayModels {
                             GROUP BY dct 
                             ) AS aa
                             GROUP BY aa.dct ORDER BY sum DESC)d, (SELECT @rownum:=0) r
-                            LIMIT 0, 1000000 ; ; 
+                            LIMIT 0, 1000000 ; 
                         `;
         return knex.raw(sql);
     }
@@ -337,5 +360,202 @@ export class ReptodayModels {
 
        return knex.raw(sql);
     }
+
+
+
+    todayreferout(knex: Knex) {
+        let sql = `SELECT
+        DATE_FORMAT(a.vstdate,'%Y-%m-%d') as refer_date,
+      a.vsttime  as refer_time,
+       cln.namecln  as clinic,
+      
+      icd101.icd10name ,
+       
+      hospcode.off_name1  as refer_to_hos
+      from
+      
+      (SELECT orfro.rfrlct, 
+          orfro.cln, 
+          orfro.rfrcs, 
+          orfro.icd10, 
+          orfro.vstdate, 
+          orfro.vsttime, 
+          orfro.ward
+      FROM orfro
+      WHERE DATE_FORMAT(orfro.vstdate,'%Y-%m-%d')= CURDATE() and orfro.cln is not  null
+      ORDER BY orfro.vsttime asc) as a   
+      INNER join icd101 on icd101.icd10 = a.icd10
+      INNER join cln on cln.cln =a.cln
+      inner join  hospcode on hospcode.off_id = a.rfrlct`;
+        return knex.raw(sql);
+    }
+
+    todayreferback(knex: Knex) {
+        let sql = `
+        SELECT
+        DATE_FORMAT(a.rgtdate,'%Y-%m-%d')as refer_date,
+             a.rgttime as refer_time,
+          idpm.nameidpm  as dprtm,
+          icd101.icd10name,
+        hospcode.off_name1  as refer_in_hos
+        
+        from
+        (SELECT 
+         
+         
+            orfri.rfrno, 
+            
+        orfri.rfrlct, 
+              ipt.ward, 
+          ipt.prediag,
+            ipt.rgtdate, 
+            ipt.rgttime
+        FROM ipt  
+        
+        INNER JOIN orfri ON ipt.vn = orfri.vn
+              where ipt.rgtdate = CURDATE()) as a
+        INNER JOIN hospcode on hospcode.off_id = a.rfrlct
+        INNER JOIN icd101 on icd101.icd10 = a.prediag
+        INNER join idpm on idpm.idpm =a.ward  ORDER BY a.rgttime  asc`;
+        return knex.raw(sql);
+    }
+
+    todayrefersocial(knex: Knex) {
+        let sql = `
+        SELECT
+        DATE_FORMAT(a.vstdate,'%Y-%m-%d') as refer_date,
+      a.vsttime  as refer_time,
+       
+      idpm.nameidpm as dprtm,
+      icd101.icd10name,
+       
+      hospcode.off_name1  as refer_so_hos
+      from
+      
+      (SELECT orfro.rfrlct, 
+       
+          orfro.rfrcs, 
+          orfro.icd10, 
+          orfro.vstdate, 
+          orfro.vsttime, 
+          orfro.ward
+      FROM orfro
+      WHERE DATE_FORMAT(orfro.vstdate,'%Y-%m-%d')= CURDATE()  
+      ORDER BY orfro.vsttime asc) as a   
+      INNER join icd101 on icd101.icd10 = a.icd10
+      INNER join idpm on idpm.idpm =a.ward
+      inner join  hospcode on hospcode.off_id = a.rfrlct
+      `;
+        return knex.raw(sql);
+    }
+
+    todayopddead(knex: Knex) {
+        let sql = `
+        SELECT
+        a.vstdate as dead_date,
+        a.vsttime  as  dead_time,
+        a.icd10 ,
+        a.icd10name,
+        cln.namecln  as  clinic
+        
+        from
+        
+        (SELECT ovstost.ovstost, 
+            ovstost.nameovstos, 
+            DATE_FORMAT(ovst.vstdttm,'%Y-%m-%d') AS vstdate, 
+            DATE_FORMAT(ovst.vstdttm,'%H:%i:%s') AS vsttime,
+            ovst.hn, 
+             ovst.cln,
+          group_CONCAT(ovstdx.icd10 SEPARATOR ',') AS icd10,
+         group_CONCAT(icd101.icd10name SEPARATOR ',') AS icd10name
+        FROM 
+        ovstost 
+        INNER JOIN ovst ON ovstost.ovstost = ovst.ovstost
+        INNER JOIN ovstdx ON ovstdx.vn = ovst.vn
+        INNER join icd101 on icd101.icd10 = ovstdx.icd10
+        WHERE DATE_FORMAT(ovst.vstdttm,'%Y-%m-%d') = CURDATE()
+        and
+        ovstost.ovstost = '2'  
+        GROUP by  ovst.vstdttm,ovst.hn) as a 
+        
+        INNER join cln on cln.cln  =  a.cln  ORDER BY  a.vstdate desc
+      `;
+        return knex.raw(sql);
+    }
+
+    todayipddead(knex: Knex) {
+        let sql = `
+        select
+        a.dchdate as dead_date,
+        a.dchtime  as dead_time,
+        a.icd10,
+        a.icd10name,
+        a.nameidpm  as dprtm
+        
+        
+        from(SELECT ipt.ward,  
+             ipt.an,
+            ipt.dchdate, 
+        group_CONCAT(iptdx.icd10 SEPARATOR ',') AS icd10,
+        GROUP_CONCAT(icd101.icd10name SEPARATOR ',') AS icd10name,
+             ipt.dchtime ,
+             idpm.nameidpm
+             
+             
+        FROM iptdx INNER JOIN ipt ON iptdx.an = ipt.an
+        
+        
+         INNER JOIN icd101  on icd101.icd10 = iptdx.icd10
+         INNER JOIN idpm  on idpm.idpm = ipt.ward
+        
+        WHERE ipt.dchdate = CURDATE()   and ipt.dchtype in('8','9')
+        
+         group by ipt.an,ipt.dchdate,ipt.dchtime,ipt.ward) as a  ORDER BY   a.dchdate, a.dchtime  asc
+        
+      `;
+        return knex.raw(sql);
+    }
+    
+    todaylrbrith(knex: Knex) {
+        let sql = `
+        SELECT
+
+        DATE_FORMAT(lr1.brthdate,'%Y-%m-%d') as brthdate,
+      
+        child1.brthtime,
+        lr1.bresult AS icd10,
+        icd101.icd10name,
+        IF(child1.male='1', "ชาย", "หญิง") AS sex,
+        child1.brthwt,
+        child1.alive
+        FROM
+        lr AS lr1
+        INNER JOIN icd101 ON icd101.icd10 = lr1.bresult
+        INNER JOIN child  as child1 ON child1.lrno = lr1.lrno
+        where  lr1.brthdate = CURDATE()
+        ORDER BY brthtime
+      `;
+        return knex.raw(sql);
+    }
+    
+    todaylrwait(knex: Knex) {
+        let sql = `
+        SELECT
+        d.idpm  as ward,
+        
+        DATE_FORMAT(i.rgtdate,'%Y-%m-%d') as rgtdate,
+        count(i.hn) as  wait_case 
+         FROM
+        idpm AS d
+        INNER JOIN ipt AS i ON d.idpm = i.ward
+        INNER JOIN iptmove as m ON m.an = i.an AND m.vn = i.vn
+        where i.ward = '05' and  i.rgtdate = CURDATE() and dchdate = '0000-00-00' 
+        and m.wardold ='05' and m.wardnew = '05'
+        GROUP BY hn
+      `;
+        return knex.raw(sql);
+    }
+
+
 
 }
