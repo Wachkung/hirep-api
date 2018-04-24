@@ -332,6 +332,37 @@ router.get('/todaylrwait', (req, res, next) => {
             db2.destroy();
         })
 });
+router.get('/todayrevisit', (req, res, next) => {
+    let db2 = req.db2;
+
+    reptoday.todayrevisit(db2)
+        .then((results: any) => {
+            res.send({ ok: true, rows: results });
+        })
+        .catch(error => {
+            res.send({ ok: false, error: error })
+        })
+        .finally(() => {
+            db2.destroy();
+        })
+});
+router.get('/todayaccident', (req, res, next) => {
+    let db2 = req.db2;
+
+    reptoday.todayaccident(db2)
+        .then((results: any) => {
+            res.send({ ok: true, rows: results });
+        })
+        .catch(error => {
+            res.send({ ok: false, error: error })
+        })
+        .finally(() => {
+            db2.destroy();
+        })
+});
+
+
+
 
 
 export default router;

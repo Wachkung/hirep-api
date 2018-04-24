@@ -64,7 +64,7 @@ export class ReptodayModels {
         WHERE DATE_FORMAT(ovst.vstdttm,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d')
         GROUP BY ovst.vn) as a 
         INNER JOIN pttype on pttype.pttype = a.pttype   
-        GROUP BY   a.pttype   ORDER BY  amount desc)d, (SELECT @rownum:=0) r GROUP BY inscl
+        GROUP BY   a.pttype   ORDER BY  amount desc)d, (SELECT @rownum:=0) r 
         LIMIT 0, 1000000 ; 
                         `;
         return knex.raw(sql);
@@ -555,6 +555,72 @@ export class ReptodayModels {
       `;
         return knex.raw(sql);
     }
+
+    todayrevisit(knex: Knex) {
+        let sql = `
+        select 
+        a.sex,a.age,a.first_dx as dx ,DATE_FORMAT(a.first_visit,'%Y-%m-%d')as fvisit
+        ,DATE_FORMAT(a.revisit,'%Y-%m-%d') as revisit,a.revisit_time as revtime
+        from(
+        select 
+        p.hn,
+        p.pop_id as cid,
+        concat(p.fname,' ',p.lname) as fullname,
+        m.namemale as sex,
+        floor(datediff(date(o.vstdttm),p.brthdate)/365.25) as age,
+        d1.icd10 as first_dx,
+        d2.icd10  as secon_dx,
+        d2.vstdttm as first_visit,
+        o.vstdttm as revisit,
+        (TIMEDIFF(o.vstdttm,d2.vstdttm)) as revisit_time,
+        p.fdate
+        from hi.ovst as o
+        inner join hi.pt as p on p.hn=o.hn
+        inner join hi.male as m on p.male=m.male
+        inner join hi.ovstdx as d1 on o.vn=d1.vn and d1.icd10 not like 'Z%'
+        inner join (
+        select hn,vstdttm,icd10 
+        from hi.ovst 
+        inner join hi.ovstdx on ovst.vn=ovstdx.vn and icd10 not like 'Z%' 
+        where   date(ovst.vstdttm) between date_add(curdate(),interval -2 day)     
+           AND  curdate()
+        ) as d2 on (TIMEDIFF(o.vstdttm,d2.vstdttm) between 1 and 475959) and o.hn=d2.hn and d2.icd10=d1.icd10
+        where   date(o.vstdttm) between date_add(curdate(),interval -2 day)     
+         AND  curdate()  group by first_visit) as a where  date(a.revisit) = CURDATE() and date(a.fdate) <> CURDATE()
+      `;
+        return knex.raw(sql);
+    }
+
+    todayaccident(knex: Knex) {
+        let sql = `
+        SELECT
+        
+        acci.nameacci  as name_acci,
+         a.icd103 as icd10,
+         a.icd10name,
+        COUNT(a.traffic) AS  amount
+        
+        from
+        (SELECT emergency.vn, 
+            emergency.traffic, 
+            emergency.vstdttm, 
+            ovst.hn, 
+              
+         group_CONCAT(ovstdx.icd10 SEPARATOR ',') AS icd103,
+         group_CONCAT(icd101.icd10name SEPARATOR ',') AS icd10name
+        
+             
+        FROM emergency INNER JOIN ovst ON ovst.vn = emergency.vn AND ovst.vstdttm = emergency.vstdttm
+             INNER JOIN acci ON acci.codeacci = emergency.traffic
+             INNER JOIN ovstdx ON ovstdx.vn = ovst.vn
+              INNER join icd101  on icd101.icd10 = ovstdx.icd10
+        WHERE DATE_FORMAT(emergency.vstdttm,'%Y-%m-%d') = CURDATE()   GROUP BY  emergency.traffic,emergency.traffic,emergency.vstdttm,ovst.hn) as a
+         INNER join acci on acci.codeacci =a.traffic    GROUP BY  a.traffic
+      `;
+        return knex.raw(sql);
+    }
+
+
 
 
 
